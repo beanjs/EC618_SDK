@@ -130,7 +130,6 @@ add_cxflags("-g3",
             "-mslow-flash-data",
             "-fstack-usage",
             "-Wstack-usage=4096",
-            "-fcallgraph-info",
 {force=true})
 
 add_ldflags("--specs=nano.specs", {force=true})
@@ -318,7 +317,7 @@ target(USER_PROJECT_NAME..".elf")
 	)
     end
 
-	add_ldflags(LD_BASE_FLAGS .. " -Wl,--whole-archive -Wl,--start-group " .. LIB_BASE .. LIB_USER .. " -Wl,--end-group -Wl,--no-whole-archive -Wl,--no-undefined -Wl,--no-print-map-discarded", {force=true})
+	add_ldflags(LD_BASE_FLAGS .. " -Wl,--whole-archive -Wl,--start-group " .. LIB_BASE .. LIB_USER .. " -Wl,--end-group -Wl,--no-whole-archive -Wl,--no-undefined ", {force=true})
 	
     on_load(function (target)
         if USER_PROJECT_NAME == 'luatos' then
@@ -355,11 +354,12 @@ target(USER_PROJECT_NAME..".elf")
 		io.writefile("$(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".size", os.iorun(GCC_DIR .. "bin/arm-none-eabi-size $(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".elf"))
 		-- io.cat("$(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".size")
 		os.exec(GCC_DIR .. "bin/arm-none-eabi-objcopy -O binary $(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".elf $(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".bin")
-		os.cp("$(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".bin", "$(buildir)/"..USER_PROJECT_NAME.."/ap.bin")
-        os.exec("./PLAT/tools/fcelf.exe -M -input ./PLAT/tools/ap_bootloader.bin -addrname  BL_IMG_MERGE_ADDR -flashsize BOOTLOADER_FLASH_LOAD_SIZE -input $(buildir)/"..USER_PROJECT_NAME.."/ap.bin -addrname  AP_IMG_MERGE_ADDR -flashsize AP_FLASH_LOAD_SIZE -input ./PLAT/prebuild/FW/lib/cp-demo-flash.bin -addrname CP_IMG_MERGE_ADDR -flashsize CP_FLASH_LOAD_SIZE -def ./PLAT/device/target/board/ec618_0h00/common/inc/mem_map.h -outfile " .. SDK_PATH .. "/out/" ..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".binpkg")
-		os.cp("$(buildir)/"..USER_PROJECT_NAME.."/*.bin", OUT_PATH)
-		os.cp("$(buildir)/"..USER_PROJECT_NAME.."/*.map", OUT_PATH)
-		os.cp("$(buildir)/"..USER_PROJECT_NAME.."/*.elf", OUT_PATH)
+		os.cp("$(buildir)/"..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".bin", "$(buildir)/"..USER_PROJECT_NAME.."/ap_flash.bin")
+        -- os.exec("./PLAT/tools/fcelf.exe -M -input ./PLAT/tools/ap_bootloader.bin -addrname  BL_IMG_MERGE_ADDR -flashsize BOOTLOADER_FLASH_LOAD_SIZE -input $(buildir)/"..USER_PROJECT_NAME.."/ap.bin -addrname  AP_IMG_MERGE_ADDR -flashsize AP_FLASH_LOAD_SIZE -input ./PLAT/prebuild/FW/lib/cp-demo-flash.bin -addrname CP_IMG_MERGE_ADDR -flashsize CP_FLASH_LOAD_SIZE -def ./PLAT/device/target/board/ec618_0h00/common/inc/mem_map.h -outfile " .. SDK_PATH .. "/out/" ..USER_PROJECT_NAME.."/"..USER_PROJECT_NAME..".binpkg")
+		os.cp("$(buildir)/"..USER_PROJECT_NAME.."/ap_flash.bin", OUT_PATH)
+		os.cp("./PLAT/tools/agentboot.bin", OUT_PATH)
+        os.cp("./PLAT/tools/ap_bootloader.bin", OUT_PATH)
+		os.cp("./PLAT/prebuild/FW/lib/cp-demo-flash.bin", OUT_PATH)
 		os.cp("./PLAT/comdb.txt", OUT_PATH)
         if USER_PROJECT_NAME == 'luatos' then
             local path7z = nil

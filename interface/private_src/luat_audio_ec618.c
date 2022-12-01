@@ -31,7 +31,7 @@ void luat_audio_play_file_default_fun(void *param)
 }
 void luat_audio_play_tts_default_fun(void *param)
 {
-	audio_play_TTS_default_fun(param);
+	audio_play_tts_default_fun(param);
 }
 
 void luat_audio_play_global_init(

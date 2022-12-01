@@ -36,7 +36,7 @@ luat_iconv_t luat_iconv_open (const char *to_code, const char *from_code)
 
 size_t luat_iconv_convert (luat_iconv_t cd, char ** inbuf, size_t * in_bytes_left, char ** outbuf, size_t * out_bytes_left)
 {
-    return iconv_convert(cd, inbuf, in_bytes_left, outbuf, out_bytes_left);
+    return iconv(cd, inbuf, in_bytes_left, outbuf, out_bytes_left);
 }
 
 

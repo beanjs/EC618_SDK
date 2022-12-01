@@ -25,6 +25,9 @@
 #include "slpman.h"
 #include "reset.h"
 #include "pwrkey.h"
+#include "luat_mem.h"
+#include "common_api.h"
+#include "hal_pwrkey.h"
 static uint32_t reportMode[LUAT_PM_SLEEP_MODE_LIGHT + 1][10] = {0};
 
 int luat_pm_set_sleep_mode(int mode, const char *vote_tag)
@@ -218,6 +221,7 @@ int luat_pm_reboot(void)
 
 int luat_pm_get_vbus_status(uint8_t *status)
 {
+    extern uint8_t usb_portmon_vbuspad_level(void);
     *status = usb_portmon_vbuspad_level();
     return 0;
 }

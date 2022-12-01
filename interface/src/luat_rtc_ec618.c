@@ -24,6 +24,7 @@
 #include "common_api.h"
 #include "time.h"
 #include "osasys.h"
+#include "mw_aon_info.h"
 
 int luat_rtc_set(struct tm *tblock){
     uint32_t Timer1 = (((tblock->tm_year)<<16)&0xfff0000) | (((tblock->tm_mon)<<8)&0xff00) | ((tblock->tm_mday)&0xff);

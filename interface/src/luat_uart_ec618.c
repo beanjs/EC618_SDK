@@ -266,7 +266,7 @@ int luat_uart_read(int uartid, void* buffer, size_t len) {
         if (uartid == 1) {
             rcount = USARTdrv1->GetRxCount();
             if (buffer == NULL) return rcount;
-            if (rcount > 1) {
+            if (rcount > 0) {
                 if (rcount > len)
                     rcount = len;
                 memcpy(buffer, uart1_buff, rcount);

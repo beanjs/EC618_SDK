@@ -80,7 +80,7 @@ int luat_i2c_send(int id, int addr, void* buff, size_t len, uint8_t stop);
  * @param len 数据长度
  * @return int 
  */
-int luat_i2c_recv(int id, int addr, void* buff, size_t len);
+int luat_i2c_recv(int id, int addr, void* buff, size_t len, uint8_t stop);
 /**
  * @brief I2C 收发数据
  * 

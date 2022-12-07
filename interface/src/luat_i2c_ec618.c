@@ -137,18 +137,18 @@ int luat_i2c_send(int id, int addr, void* buff, size_t len, uint8_t stop) {
 #endif
 }
 
-int luat_i2c_recv(int id, int addr, void* buff, size_t len) {
+int luat_i2c_recv(int id, int addr, void* buff, size_t len, uint8_t stop) {
     if (!luat_i2c_exist(id)) {
         return -1;
     }
 #if RTE_I2C0
     if (id==0){
-        return i2cDrv0->MasterReceive(addr, buff, len, false);
+        return i2cDrv0->MasterReceive(addr, buff, len, !stop);
     }
 #endif
 #if RTE_I2C1
     if (id==1){
-        return i2cDrv1->MasterReceive(addr, buff, len, false);
+        return i2cDrv1->MasterReceive(addr, buff, len, !stop);
     }
 #endif
     
